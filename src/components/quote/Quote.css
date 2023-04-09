@@ -1,0 +1,20 @@
+.quote-container {
+  border-bottom: 1px solid grey;
+  padding-top: 2%;
+}
+
+.quote {
+  font-style: italic;
+  font-size: 1.2em;
+  color: #838282;
+}
+
+.quote-author {
+  color: rgb(32, 32, 32);
+  font-size: 0.9em;
+}
+
+.highlight {
+  font-weight: bold;
+  color: #04aab9;
+}

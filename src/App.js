@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useCallback, useState } from "react"
+import "./App.css"
+import SearchBar from "./components/searchBar/SearchBar"
+import Quote from "./components/quote/Quote"
+// import axios from "axios"
+import { requestQuotes } from "./components/RequestQuotes"
 
-function App() {
+const App = () => {
+  const [quotes, setQuotes] = useState([])
+
+  const onSearchSubmit = useCallback(async (term) => {
+    const quotesArray = await requestQuotes(term.toLowerCase())
+    setQuotes(quotesArray)
+  }, [])
+
+  // const onSearchSubmit2 = async (term) => {
+  //   const res = await fetch(
+  //     `https://animechan.vercel.app/api/quotes/anime?title=${term}`
+  //   )
+  //   const quotesArray = await res.json()
+  //   setQuotes(quotesArray)
+  // }
+  // console.log(quotes)
+
+  const clearResults = () => setQuotes([])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <h1 className="title">Realtime Search Bar</h1>
+
+      <SearchBar onSearchSubmit={onSearchSubmit} clearResults={clearResults} />
+
+      {
+        <div className="main-content">
+          {quotes.map((quote, i) => {
+            return <Quote quote={quote} key={i} />
+          })}
+        </div>
+      }
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
